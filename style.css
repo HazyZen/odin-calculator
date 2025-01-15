@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
 
 body {
@@ -19,8 +19,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 1rem;
+  padding: 12px;
 }
 
 .display {
@@ -30,12 +31,12 @@ body {
   outline: 3px solid #70a288;
   border: none;
   border-radius: 8px;
-  margin-top: 2rem;
   font-size: 60px;
   color: #dab785;
-  font-weight: bold;;
+  font-weight: bold;
   padding: 12px;
   text-align: end;
+  letter-spacing: 3px;
 }
 
 .btnDiv {
@@ -43,31 +44,21 @@ body {
   height: 300px;
   margin-bottom: 1rem;
   display: flex;
-  flex-flow: row-reverse;
   align-items: center;
   justify-content: flex-end;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: 5px;
 }
 
 .btn {
   background-color: #dab785;
   width: 90px;
   height: 60px;
-  border: 3px solid #70a288;
+  outline: 3px solid #70a288;
+  border: none;
   border-radius: 8px;
   font-size: 1.5rem;
   font-weight: 600;
   color: #04395e;
-}
-
-.operator {
-  background-color: #dab785;
-  width: 90px;
-  height: 60px;
-  border: 3px solid #70a288;
-  border-radius: 8px;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #04395e;
+  cursor: pointer;
 }

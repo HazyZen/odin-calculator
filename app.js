@@ -1,26 +1,23 @@
-const add = (a, b) => {
-  return a + b;
-};
+const add = (a, b) => a + b;
 
-const subtract = (a, b) => {
-  return a - b;
-};
+const subtract = (a, b) => a - b;
 
-const multiply = (a, b) => {
-  return a * b;
-};
+const multiply = (a, b) => a * b;
 
 const divide = (a, b) => {
-  return a / b;
+  return b === 0 ? "Nice Try" : a / b;
 };
 
-// console.log(add(5, 10));
+let firstNum = "";
+let secondNum = "";
+let operator = "";
+let result = 0;
 
 let container = document.createElement("div");
 container.classList.add("container");
 let display = document.createElement("div");
 display.classList.add("display");
-
+display.innerText = 0;
 document.body.appendChild(container);
 container.appendChild(display);
 
@@ -28,26 +25,93 @@ let btnDiv = document.createElement("div");
 btnDiv.classList.add("btnDiv");
 container.appendChild(btnDiv);
 
-let operators = ["/", "*", "-", "+"];
+let buttons = [
+  "C",
+  "Del",
+  "%",
+  "/",
+  7,
+  8,
+  9,
+  "*",
+  4,
+  5,
+  6,
+  "-",
+  1,
+  2,
+  3,
+  "+",
+  "00",
+  0,
+  ".",
+  "=",
+];
 
-for (let i = 9; i >= 0; i--) {
-  if (i == 9) {
-    let operator = document.createElement("button");
-    operator.classList.add("operator");
-    operator.textContent = operators[0];
-    btnDiv.appendChild(operator);
-  } else if (i == 6) {
-    let operator = document.createElement("button");
-    operator.classList.add("operator");
-    operator.textContent = operators[1];
-    btnDiv.appendChild(operator);
-  }
+buttons.forEach((button) => {
   let btn = document.createElement("button");
   btn.classList.add("btn");
-  btn.textContent = i;
+  if (["/", "*", "+", "-", "%"].includes(button)) {
+    btn.classList.add("operator");
+  } else {
+    btn.classList.add("number");
+  }
+
+  btn.value = button;
+  btn.textContent = button;
   btnDiv.appendChild(btn);
 
   btn.addEventListener("click", () => {
-    display.textContent = btn.textContent;
+    if (!isNaN(button) || button === ".") {
+      if (button === ".") {
+        if (!firstNum.includes(".")) {
+          firstNum += button;
+          display.innerText = firstNum;
+        }
+      } else {
+        firstNum += btn.textContent;
+        display.innerText = firstNum;
+      }
+    } else if (button === "Del") {
+      firstNum = firstNum.slice(0, -1);
+      display.innerText = firstNum || 0;
+    } else if (button === "C") {
+      firstNum = "";
+      secondNum = "";
+      operator = "";
+      display.innerText = 0;
+    } else if (button === "=") {
+      result = operate(parseFloat(secondNum), parseFloat(firstNum), operator);
+      display.innerText = result;
+      firstNum = result.toString();
+      operator = "";
+    } else if (button === "%") {
+      if (firstNum) {
+        // Calculate percentage
+        firstNum = (parseFloat(firstNum) / 100).toString();
+        display.innerText = firstNum; // Update display
+      }
+    } else {
+      if (firstNum) {
+        secondNum = firstNum;
+        operator = button;
+        firstNum = "";
+      }
+    }
   });
-}
+});
+
+const operate = (firstNum, secondNum, operator) => {
+  switch (operator) {
+    case "+":
+      return add(firstNum, secondNum);
+    case "-":
+      return subtract(firstNum, secondNum);
+    case "*":
+      return multiply(firstNum, secondNum);
+    case "/":
+      return divide(firstNum, secondNum);
+    default:
+      return 0;
+  }
+};
